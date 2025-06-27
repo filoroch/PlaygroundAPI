@@ -7,14 +7,9 @@ Inicialmente, quero desenvolver uma pequena API baseada em controllers para simu
 ### Models
 |Models|Descrição|Campos|
 |---|---|---|
-| Livros | Representa um objeto/tabela livros no banco de dados | - `ìd` <br> - `titulo` <br> - `autor FK`
-- Livros
-    - Todo livro tem pelo menos um autor e um autor pode ter muitos livros   
-    - Todo livro tem Titulo
-    - Todo livro tem ano de publicação
-- Autores
-    - Todo autor tem pelo menos um livro e pode ter varios livros
-    - Todo autor tem Nome
+| Livros | Representa um objeto/tabela livros no banco de dados <br> Um livro tem titulo, tem pelo menos um autor e tem um ano de publicação | - `ìd` <br> - `titulo` <br> - `autor FK` <br> - `anoPublicacao`
+| Autores | Representa o autor de um livro | - `ìd` <br> -`nome` <br> - `livro FK`
+
 - Clientes
 - Usuarios
 
