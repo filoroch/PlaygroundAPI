@@ -6,7 +6,9 @@ Inicialmente, quero desenvolver uma pequena API baseada em controllers para simu
 
 ## Tasks
 - [ ] Criar os modelos 
+- [x] Configurar o swagger
 - [/] Criar as controllers
+    - [x] Agrupas as controllers
 
 # Changelog
 ## 2025-06-27
