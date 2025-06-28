@@ -10,7 +10,7 @@ Inicialmente, quero desenvolver uma pequena API baseada em controllers para simu
 
 # Changelog
 ## 2025-06-27
-- [/] Criar as controllers
+- Criar as controllers
     ---
     Results é um objeto que permite semanticamente retornar objetos com satus/codigos HTTP especifico.
     
@@ -20,7 +20,7 @@ Inicialmente, quero desenvolver uma pequena API baseada em controllers para simu
     });
     ```
 
-- [/] Agrupar as controllers
+- Agrupar as controllers
     --- 
     No caso das Minimal APIs, para agrupar endpoints com uma mesma base, pode se usar classes que agrupam as finções e depois criar um objeto RouteGroupBuilder para mapea-las como Endpoins Semanticos da aplicação. Posteriormente essas classes seram separadas em outros arquivos
 
@@ -107,7 +107,7 @@ Inicialmente, quero desenvolver uma pequena API baseada em controllers para simu
     RouteGroupBuilder autorGroup = app.MapGroup("autor").WithTags("Autor");
     autorGroup.MapAutorEndpoins();
     ```
-- [x] Configurar o Swagger
+- Configurar o Swagger
     ---
     Com ajuda do Claude no Modo Agente do Github Copilot, percebi que o Swagger só funciona na variavel de Desenvolvimento, provavelmente no futuro vou mudar isso para que sempre exista a interface, assim como usar a interface do Scalar.
 
