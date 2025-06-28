@@ -1,161 +1,76 @@
-# About
-O projeto se refere a um grande playground de teste de api. Quero simular uma API completa em C# testando todos os meus conhecimentos e marcando os aqui. No fim, tudo se resume a um grande teste, onde a falha ou o sucesso vão me permitir identificar pontos de melhoria na minha forma de desenvolvimento
+# PlaygroundAPI
 
-## Sobre o projeto
-Inicialmente, quero desenvolver uma pequena API baseada em controllers para simular uma biblioteca online, com Livros, Clientes, Usuarios, Autores e etc.
+Este projeto é um **playground de API** desenvolvido em C# para simular uma **biblioteca online**. O objetivo é aplicar e testar conhecimentos em desenvolvimento de APIs, servindo como um ambiente para experimentação e aprimoramento contínuo.
 
-## Tasks
+## Como Iniciar
+
+Para rodar o projeto localmente, siga estas etapas:
+
+### Requisitos
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) ou superior.
+- Um editor de código (Visual Studio, VS Code, etc.).
+
+### Configuração
+
+1.  **Clone o repositório:**
+    ```bash
+    git clone https://github.com/filoroch/PlaygroundAPI.git
+    cd PlaygroundAPI
+    ```
+
+2.  **Configure os Segredos do Usuário:**
+    O projeto usa `secrets.json` para dados sensíveis (ex: connection strings, chaves JWT). Configure-os localmente com `dotnet user-secrets`:
+
+    ```bash
+    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Sua_Connection_String_Aqui"
+    dotnet user-secrets set "Jwt:Key" "Sua_Chave_Super_Secreta_Aqui"
+    ```
+
+### Execução
+
+1.  **Inicie a aplicação:**
+    ```bash
+    dotnet run
+    ```
+    (O projeto iniciará em modo de desenvolvimento por padrão.)
+
+2.  **Acesse a API:**
+    A API estará disponível em:
+    - **HTTP:** `http://localhost:5000`
+    - **HTTPS:** `https://localhost:7000`
+
+    A documentação do Swagger UI pode ser acessada em `/swagger` (ex: [http://localhost:5000/swagger](http://localhost:5000/swagger)).
+
+## Próximos Passos
+
 - [x] Criar os modelos 
-    - [ ] Criar os modelos de transferencia
-- [x] Configurar o swagger
+    - [ ] Criar os modelos de transferência (DTOs)
+- [x] Configurar o Swagger
 - [ ] Criar as controllers
-    - [x] Agrupas as controllers
+    - [x] Agrupar as controllers
+- [ ] Configurar o banco de dados (EF Core e SQLite)
+
+Para mais detalhes sobre o projeto, incluindo modelos de dados, diagramas e sequências de funcionamento, consulte a [Wiki do Projeto](https://github.com/filoroch/PlaygroundAPI/wiki).
+
+# FAQ - Perguntas Frequentes
+
+### O que é o PlaygroundAPI?
+É um projeto de "playground" para testar e aplicar conhecimentos em desenvolvimento de APIs com C#, simulando uma biblioteca online.
+
+### Quais tecnologias principais são utilizadas?
+O projeto é desenvolvido em C# com .NET 8 SDK e utiliza Minimal APIs. A configuração do banco de dados será feita com EF Core e SQLite.
+
+### Onde posso encontrar a documentação detalhada?
+A documentação detalhada, incluindo modelos de dados, diagramas e sequências de funcionamento, está disponível na [Wiki do Projeto](https://github.com/filoroch/PlaygroundAPI/wiki).
+
+### Como posso contribuir?
+Sinta-se à vontade para abrir issues, sugerir melhorias ou enviar pull requests. Toda contribuição é bem-vinda!
 
 # Changelog
-## 2025-06-28
-- **Criar os models** -> representam as tabelas do meu banco de dados. No moemnto estão puramente conceituais mas logo estaram de acordo com as versões na minha Wiki
-    
-    ```Csharp
-    namespace PlaygroundAPI.Models
-    {
-        public class AutorModel
-        {
-            public int id { get; set; }
-            public string Nome { get; set; }
-            public List<LivroModel> Livros { get; set; }
-        }
-        public class ClientModel
-        {
-            public int id { get; set; }
-            public string nome { get; set; }
-            public UserModel createdBy { get; set; }
-        }
-        public class LivroModel
-        {
-            public int id { get; set; }
-            public string Titulo { get; set; }
-            public string Description { get; set; }
-            public List<AutorModel> Autores { get; set; }
-        }
-    }
-    ```
-- Criar os DTOs (Modelos de transferencia)
-## 2025-06-27
-- **Criar as controllers**
-    
-    Results é um objeto que permite semanticamente retornar objetos com satus/codigos HTTP especifico.
-    
-    ```CSharp
-    app.MapGet("/user/signin", (HttpContext context) => {
-        return Results.Ok("Cadastrar Usuario");
-    });
-    ```
+Para ver o histórico completo de mudanças, consulte o [CHANGELOG.md](CHANGELOG.md).
 
-- **Agrupar as controllers**
+# Referências
 
-    No caso das Minimal APIs, para agrupar endpoints com uma mesma base, pode se usar classes que agrupam as finções e depois criar um objeto RouteGroupBuilder para mapea-las como Endpoins Semanticos da aplicação. Posteriormente essas classes seram separadas em outros arquivos
-
-    ```CSharp
-    public static class UserEndpoints
-    {
-        public static RouteGroupBuilder MapUserEndponts(this RouteGroupBuilder group)
-        {
-            group.MapPost("signin", (HttpContext context) =>
-                Results.Created("user/signin", null))
-                    .WithName("UserSignIn")
-                    .WithSummary("Cadastrar usuário");
-
-            group.MapPost("login", (HttpContext context) =>
-                Results.Ok("Logar usuario"))
-                    .WithName("UserLogin")
-                    .WithSummary("Login do usuário");
-
-            return group;
-        }
-    }
-    public static class ClientEndpoints
-    {
-        public static RouteGroupBuilder MapClientEndpoins(this RouteGroupBuilder group)
-        {
-            group.MapGet("/", (HttpContext context) =>
-                Results.Ok("Buscar cliente"))
-                    .WithName("GetClients")
-                    .WithSummary("Buscar todos os clientes");
-
-            group.MapPost("/", (HttpContext context) =>
-                Results.Created("client", null))
-                    .WithName("CreateClient")
-                    .WithSummary("Criar um novo usuário");
-
-            group.MapPut("{id:int}", (HttpContext context, int id) =>
-                Results.Ok($"Atualizar cliente com ID {id}"))
-                    .WithName("UpdateClient")
-                    .WithSummary("Atualiza um cliente com base no ID");
-
-            group.MapDelete("{id:int}", (HttpContext context, int id) =>
-                Results.Ok($"Deletar cliente com ID {id}"))
-                    .WithName("DeleteClient")
-                    .WithSummary("Deleta um cliente");
-
-            return group;
-        }
-    }
-
-    public static class AutorEndpoints
-    {
-        public static RouteGroupBuilder MapAutorEndpoins(this RouteGroupBuilder group)
-        {
-            group.MapGet("/", (HttpContext context) =>
-                Results.Ok("Buscar autor"))
-                    .WithName("GetAutor")
-                    .WithSummary("Buscar todos os autores");
-
-            group.MapPost("/", (HttpContext context) =>
-                Results.Created("autor", null))
-                    .WithName("CreateAutor")
-                    .WithSummary("Cria um novo autor");
-
-            group.MapPut("{id:int}", (HttpContext context, int id) =>
-                Results.Ok($"Atualizar autor com ID {id}"))
-                    .WithName("UpdateAutor")
-                    .WithSummary("Atualiza um autor com base em iD");
-
-            group.MapDelete("{id:int}", (HttpContext context, int id) =>
-                Results.Ok($"Deletar autor com ID {id}"))
-                    .WithName("DeleteAutor")
-                    .WithSummary("Deleta um autor");
-
-            return group;
-        }
-    }
-
-    RouteGroupBuilder userGroup = app.MapGroup("user").WithTags("User");
-    userGroup.MapUserEndponts();
-
-    RouteGroupBuilder clientGroup = app.MapGroup("client").WithTags("Client");
-    clientGroup.MapClientEndpoins();
-
-    RouteGroupBuilder autorGroup = app.MapGroup("autor").WithTags("Autor");
-    autorGroup.MapAutorEndpoins();
-    ```
-- **Configurar o Swagger**
-    
-    Com ajuda do Claude no Modo Agente do Github Copilot, percebi que o Swagger só funciona na variavel de Desenvolvimento, provavelmente no futuro vou mudar isso para que sempre exista a interface, assim como usar a interface do Scalar.
-
-    ```CSharp
-    builder.Services.AddSwaggerGen(options =>
-    {
-        options.SwaggerDoc("v1", new OpenApiInfo
-        {
-        Version = "v1",
-        Title = "Playground API",
-        Description = "ASP.NET Core Web API para servir uma aplicação de biblioteca."
-        });
-    });
-
-    ```
-
-    Para rodar o codigo agora, basta usar:
-    ``dotnet run --environment Development``
-## Referencias
 - [Microsoft | Como usar o Swashbuckle/Swagger](https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-8.0&tabs=visual-studio)
+- [AllInOneAspNe - Guia de APIs Rest com C#](https://github.com/LuanRoger/AllInOneAspNe)
