@@ -5,12 +5,41 @@ O projeto se refere a um grande playground de teste de api. Quero simular uma AP
 Inicialmente, quero desenvolver uma pequena API baseada em controllers para simular uma biblioteca online, com Livros, Clientes, Usuarios, Autores e etc.
 
 ## Tasks
-- [ ] Criar os modelos 
+- [x] Criar os modelos 
+    - [ ] Criar os modelos de transferencia
 - [x] Configurar o swagger
 - [/] Criar as controllers
     - [x] Agrupas as controllers
 
 # Changelog
+## 2025-06-28
+- Criar os models -> representam as tabelas do meu banco de dados. No moemnto estão puramente conceituais mas logo estaram de acordo com as versões na minha Wiki
+    ---
+    ```Csharp
+    namespace PlaygroundAPI.Models
+    {
+        public class AutorModel
+        {
+            public int id { get; set; }
+            public string Nome { get; set; }
+            public List<LivroModel> Livros { get; set; }
+        }
+        public class ClientModel
+        {
+            public int id { get; set; }
+            public string nome { get; set; }
+            public UserModel createdBy { get; set; }
+        }
+        public class LivroModel
+        {
+            public int id { get; set; }
+            public string Titulo { get; set; }
+            public string Description { get; set; }
+            public List<AutorModel> Autores { get; set; }
+        }
+    }
+    ```
+- Criar os DTOs (Modelos de transferencia)
 ## 2025-06-27
 - Criar as controllers
     ---
