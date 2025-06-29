@@ -4,6 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <UserSecretsId>PlaygroundAPI-5f828e9e-6d27-4293-87b4-4314725a1e63</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
