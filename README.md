@@ -19,13 +19,14 @@ Para rodar o projeto localmente, siga estas etapas:
     cd PlaygroundAPI
     ```
 
-2.  **Configure os Segredos do Usuário:**
-    O projeto usa `secrets.json` para dados sensíveis (ex: connection strings, chaves JWT). Configure-os localmente com `dotnet user-secrets`:
+2.  **Configure os Segredos do Usuário (User Secrets):**
+    Para dados sensíveis (ex: connection strings, chaves JWT) em ambiente de desenvolvimento, o projeto utiliza o sistema de User Secrets do .NET. Estes segredos são armazenados fora do diretório do projeto e não são versionados. Configure-os localmente com `dotnet user-secrets` (substitua os exemplos pelos seus segredos reais):
 
     ```bash
-    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Sua_Connection_String_Aqui"
-    dotnet user-secrets set "Jwt:Key" "Sua_Chave_Super_Secreta_Aqui"
+    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Sua_Connection_String_Aqui" --project "PlaygroundAPI.csproj"
+    dotnet user-secrets set "Jwt:Key" "Sua_Chave_Super_Secreta_Aqui" --project "PlaygroundAPI.csproj"
     ```
+    *Certifique-se de que o `UserSecretsId` esteja configurado no seu `.csproj`.*
 
 ### Execução
 
